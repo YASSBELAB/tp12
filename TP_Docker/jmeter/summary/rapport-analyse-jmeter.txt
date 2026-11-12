@@ -1,0 +1,71 @@
+RAPPORT D’ANALYSE DES RÉSULTATS JMETER
+Dossier analysé : jmeter\summary
+
+1. MÉTHODE DE LECTURE
+Les temps Average, Min et Max sont en millisecondes. Throughput est exprimé en requêtes par seconde. Les observations ci-dessous proviennent des lignes TOTAL lorsque le CSV en contient une. Les résultats sont ceux exportés par JMeter et ne constituent pas une comparaison parfaitement contrôlée si la durée, la machine, l’état de la base ou la configuration des tests diffèrent.
+
+2. GET PRODUCTS — COMPARAISON PAR FRAMEWORK
+
+Spring Boot (fichiers 10, 50, 100 et 200 utilisateurs)
+Utilisateurs | Échantillons | Temps moyen | Maximum | Débit req/s | Erreurs
+10  | 76 657 | 7 ms   | 578 ms  | 1277.38 | 0.000%
+50  | 93 230 | 29 ms  | 548 ms  | 1552.57 | 0.000%
+100 | 95 928 | 58 ms  | 515 ms  | 1595.69 | 0.000%
+200 | 95 279 | 119 ms | 1144 ms | 1580.97 | 0.000%
+
+Lecture : dans ces exports, Spring Boot a conservé 0 % d’erreurs. Le temps moyen augmente avec la charge, de 7 ms à 10 utilisateurs à 119 ms à 200. Le débit se stabilise autour de 1 550–1 596 requêtes/s entre 50 et 200 utilisateurs. Le maximum de 1 144 ms à 200 utilisateurs indique toutefois des requêtes ponctuellement lentes.
+
+Express (10, 50, 100 et 200 utilisateurs)
+Utilisateurs | Échantillons | Temps moyen | Maximum | Débit req/s | Erreurs
+10  | 59 735 | 9 ms   | 57 ms  | 995.40 | 0.000%
+50  | 60 768 | 47 ms  | 120 ms | 1011.50 | 0.000%
+100 | 54 443 | 104 ms | 216 ms | 904.65 | 0.000%
+200 | 56 047 | 205 ms | 361 ms | 928.50 | 0.000%
+
+Lecture : Express a 0 % d’erreurs dans ces fichiers. Le temps moyen augmente de 9 ms à 205 ms entre 10 et 200 utilisateurs, tandis que le débit reste près de 900–1 012 requêtes/s.
+
+Laravel (10, 50, 100 et 200 utilisateurs)
+Utilisateurs | Échantillons | Temps moyen | Maximum | Débit req/s | Erreurs
+10  | 14 409 | 39 ms  | 307 ms  | 239.97 | 0.000%
+50  | 15 558 | 184 ms | 335 ms  | 258.26 | 0.000%
+100 | 15 922 | 362 ms | 565 ms  | 263.18 | 0.000%
+200 | 15 684 | 739 ms | 1019 ms | 257.04 | 0.000%
+
+Lecture : Laravel a 0 % d’erreurs dans les exports GET. Le temps moyen augmente sensiblement avec la charge, de 39 ms à 739 ms. Le débit reste proche de 240–263 requêtes/s.
+
+Comparaison prudente à 200 utilisateurs : Spring Boot présente le plus haut débit (1 580.97 req/s) et le temps moyen le plus bas (119 ms), suivi d’Express (928.50 req/s, 205 ms), puis Laravel (257.04 req/s, 739 ms). Cette comparaison est indicative : les réponses ne font pas la même taille (moyenne 611.7 octets Spring, 1419 Express et 182 Laravel), et les exports ne prouvent pas que l’environnement était identique.
+
+3. TESTS CRUD — POST / PUT / DELETE
+
+Spring Boot — TOTAL
+10 utilisateurs : 966 échantillons, moyenne 600 ms, débit 16.01 req/s, erreurs 0.000%.
+50 utilisateurs : 968 échantillons, moyenne 3 089 ms, débit 15.17 req/s, erreurs 0.000%.
+100 utilisateurs : 908 échantillons, moyenne 6 652 ms, débit 13.86 req/s, erreurs 0.000%.
+200 utilisateurs : 1 161 échantillons, moyenne 10 833 ms, débit 16.21 req/s, erreurs 0.000%.
+
+Express — TOTAL
+10crudexpress.csv : 1 062 échantillons, moyenne 5 746 ms, débit 16.24 req/s, erreurs 0.000%.
+10expresscrud.csv : 921 échantillons, moyenne 628 ms, débit 15.23 req/s, erreurs 0.000%.
+50 utilisateurs : 1 043 échantillons, moyenne 2 831 ms, débit 16.62 req/s, erreurs 0.000%.
+200 utilisateurs : 1 049 échantillons, moyenne 12 306 ms, débit 14.72 req/s, erreurs 0.000%.
+
+Laravel — TOTAL
+10 utilisateurs : 15 243 échantillons, moyenne 37 ms, débit 244.78 req/s, erreurs 0.000%.
+50 utilisateurs : 16 006 échantillons, moyenne 179 ms, débit 255.96 req/s, erreurs 0.000%.
+100 utilisateurs : 16 106 échantillons, moyenne 358 ms, débit 257.51 req/s, erreurs 0.000%.
+200 utilisateurs : 16 139 échantillons, moyenne 718 ms, débit 255.73 req/s, erreurs 0.000%.
+
+Lecture CRUD : les trois frameworks affichent 0 % d’erreurs dans les CSV fournis. Les mesures CRUD d’Express à 10 utilisateurs sont contradictoires : les deux fichiers donnent des moyennes très différentes (5 746 ms contre 628 ms). Il faut identifier le bon export ou refaire ce scénario avant de conclure. Les temps CRUD Spring Boot et Express augmentent fortement dans plusieurs scénarios; Laravel conserve des moyennes plus faibles dans ces fichiers. Ces chiffres ne sont comparables que si le nombre de threads, la durée, les opérations, la base de données et les conditions d’exécution sont identiques.
+
+4. QUALITÉ ET COMPLÉTUDE DES FICHIERS
+- GET : les scénarios 10, 50, 100 et 200 sont présents pour Spring Boot, Express et Laravel.
+- Spring Boot CRUD : 10, 50, 100 et 200 sont présents.
+- Laravel CRUD : 10, 50, 100 et 200 sont présents.
+- Express CRUD : 10 (deux fichiers), 50 et 200 sont présents; le fichier 100 utilisateurs manque.
+- Les noms de certains fichiers contiennent des fautes ou abréviations. Vérifier leur contenu et renommer proprement les fichiers pour éviter les confusions.
+- Chaque fichier affiche 0.000% d’erreurs, mais cela ne garantit pas à lui seul que toutes les réponses étaient fonctionnellement correctes. Vérifier les codes HTTP et le contenu des réponses si requis par le laboratoire.
+
+5. CONCLUSION
+Sur les essais GET fournis, Spring Boot obtient le meilleur débit observé et le temps moyen le plus faible sous 200 utilisateurs. Express se situe au milieu et Laravel présente le temps moyen le plus élevé à cette charge. Pour CRUD, tous les exports montrent 0 % d’erreurs, mais le jeu Express CRUD est incomplet et contient deux résultats contradictoires à 10 utilisateurs. Avant de tirer une conclusion définitive sur CRUD, refaire Express à 10 et 100 utilisateurs dans les mêmes conditions que les autres tests, puis conserver un export CSV distinct pour chaque scénario.
+
+Fichiers source analysés : tous les fichiers *.csv présents dans jmeter\summary à la date de création du rapport.

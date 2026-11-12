@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+Laravel GET products,15558,184,10,335,47.34,0.000%,258.25836,45.90,45.40,182.0
+TOTAL,15558,184,10,335,47.34,0.000%,258.25836,45.90,45.40,182.0

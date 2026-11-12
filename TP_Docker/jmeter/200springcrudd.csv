@@ -1,0 +1,5 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+POST create product,432,9564,229,14098,3391.97,0.000%,6.03066,3.12,1.86,530.0
+PUT update product,410,11196,466,14324,2165.77,0.000%,5.85346,3.08,1.87,538.0
+DELETE product,319,12084,1273,14097,1423.59,0.000%,4.51649,1.59,1.03,361.0
+TOTAL,1161,10833,229,14324,2751.36,0.000%,16.20739,7.70,4.70,486.4

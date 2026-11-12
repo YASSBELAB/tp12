@@ -1,0 +1,20 @@
+# Secrets and local configuration
+**/.env
+**/.env.*
+!**/.env.example
+
+# Dependencies and generated builds
+**/node_modules/
+**/vendor/
+**/target/
+**/build/
+**/dist/
+**/.idea/
+**/.vscode/
+
+# Generated JMeter outputs and temporary backups
+TP_Docker/jmeter/10userspring
+TP_Docker/jmeter.log
+**/*.jtl
+**/*.jmx.pre-uuid.bak
+TP_Docker/metrics/logs_*.txt

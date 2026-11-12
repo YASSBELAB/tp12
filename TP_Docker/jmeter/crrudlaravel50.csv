@@ -1,0 +1,6 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+POST Laravel admin login,1,2224,2224,2224,0.00,0.000%,.44964,0.08,0.13,182.0
+POST create product,5351,179,10,302,45.29,0.000%,88.84424,15.79,30.45,182.0
+PUT update product,5335,179,10,296,44.99,0.000%,88.59919,15.75,32.88,182.0
+DELETE product,5319,179,9,309,44.62,0.000%,88.36869,15.71,19.42,182.0
+TOTAL,16006,179,9,2224,47.78,0.000%,255.96495,45.49,79.69,182.0

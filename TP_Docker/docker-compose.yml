@@ -1,0 +1,84 @@
+
+services:
+  # ---------------- MYSQL ----------------
+  mysql:
+    image: mysql:8
+    container_name: products-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: products
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./docker/create-laravel-db.sql:/docker-entrypoint-initdb.d/02-create-laravel-db.sql:ro
+      - ./docker/03-express-schema.sql:/docker-entrypoint-initdb.d/03-express-schema.sql:ro
+      - ./docker/04-express-seed.sql:/docker-entrypoint-initdb.d/04-express-seed.sql:ro
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-psecret"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  # ---------------- SPRING BOOT ----------------
+  spring-api:
+    build:
+      context: "C:/Users/Admin/Downloads/lab3-jpa/lab3-jpa"
+    container_name: spring-api
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/products
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ---------------- EXPRESS ----------------
+  express-api:
+    build:
+      context: "C:/Users/Admin/Desktop/tp6/node-product-api"
+    container_name: express-api
+    ports:
+      - "8082:3000"
+    environment:
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: secret
+      DB_NAME: product_api
+      API_KEY: tp6-super-secret-api-key
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ---------------- LARAVEL PHP-FPM ----------------
+  laravel-php:
+    build:
+      context: "C:/Users/Admin/Desktop/tp8/lab8-api"
+      target: php
+    container_name: laravel-php
+    environment:
+      DB_CONNECTION: mysql
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: laravel_products
+      DB_USERNAME: root
+      DB_PASSWORD: secret
+    depends_on:
+      mysql:
+        condition: service_healthy
+
+  # ---------------- LARAVEL NGINX ----------------
+  laravel-nginx:
+    build:
+      context: "C:/Users/Admin/Desktop/tp8/lab8-api"
+      target: nginx
+    container_name: laravel-nginx
+    ports:
+      - "8083:80"
+    depends_on:
+      - laravel-php
+
+volumes:
+  mysql-data:

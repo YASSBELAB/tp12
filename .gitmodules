@@ -1,0 +1,9 @@
+[submodule "lab3-jpa/lab3-jpa"]
+	path = lab3-jpa/lab3-jpa
+	url = https://github.com/YASSBELAB/tp3.git
+[submodule "tp6/node-product-api"]
+	path = tp6/node-product-api
+	url = https://github.com/YASSBELAB/tp6.git
+[submodule "tp8/lab8-api"]
+	path = tp8/lab8-api
+	url = https://github.com/YASSBELAB/tp8.git

@@ -1,0 +1,3 @@
+Label,# Samples,Average,Min,Max,Std. Dev.,Error %,Throughput,Received KB/sec,Sent KB/sec,Avg. Bytes
+Express GET products,59735,9,1,57,3.29,0.000%,995.40084,1379.37,174.97,1419.0
+TOTAL,59735,9,1,57,3.29,0.000%,995.40084,1379.37,174.97,1419.0
